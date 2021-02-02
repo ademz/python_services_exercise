@@ -1,3 +1,5 @@
 boto3
 python-decouple
 uuid
+Flask-API
+flask-restful

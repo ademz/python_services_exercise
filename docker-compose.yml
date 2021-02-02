@@ -8,6 +8,10 @@ services:
     container_name: api_service
     command: ["python", "-u",  "./service.py"]
     restart: always
+    depends_on:
+        - localstack
+    ports:
+        - 5000:5000
     environment:
       - AWS_ACCESS_KEY_ID=foo
       - AWS_SECRET_ACCESS_KEY=bar
@@ -23,6 +27,8 @@ services:
     container_name: booking_service
     command: ["python", "-u",  "./service.py"]
     restart: always
+    depends_on:
+        - localstack
     environment:
       - AWS_ACCESS_KEY_ID=foo
       - AWS_SECRET_ACCESS_KEY=bar
@@ -41,7 +47,7 @@ services:
     environment:
       - SERVICES=sqs
       - PORT_WEB_UI=8080
-      - DEBUG=0
+      - DEBUG=1
       - DATA_DIR=./tmp/localstack/data
       - LAMBDA_EXECUTOR=local
       - KINESIS_ERROR_PROBABILITY=0
@@ -50,3 +56,4 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./localstack-entrypoint.sh:/docker-entrypoint-initaws.d/localstack-entrypoint.sh
+
